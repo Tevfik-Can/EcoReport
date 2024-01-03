@@ -1,0 +1,32 @@
+
+.box1{
+    margin-top: 300px;
+    display: inline-block;
+    position: relative;
+    float: left;
+    width: 20%;
+    height: 1000px;
+    background-color: white;
+}
+
+.insbox1{
+    text-align:center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.box2 {
+    display: inline-block;
+    position: relative;
+    float: left;
+    width: 80%;
+    height: 1000px;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
