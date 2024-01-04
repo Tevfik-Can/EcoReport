@@ -15,8 +15,8 @@ mycursor = mydb.cursor()
 def insertreport(data):
     # SQL statement for insertion
     sqlstatement = "INSERT INTO reports (r_name, r_category, r_latitude, r_longitude, r_date, r_address, " \
-                   "air_quality, pollen_cond, noise_pol, uv_index) VALUES" \
-                   "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                   "air_quality, pollen_cond, noise_pol, uv_index, event_id) VALUES" \
+                   "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NULL)"
 
     try:
         # Execute the insertion

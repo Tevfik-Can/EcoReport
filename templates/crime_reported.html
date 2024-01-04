@@ -10,7 +10,10 @@
 </head>
 <body>
     <div class="box1">
-        {% block body %} {% endblock %}
+        <div class="image-container">
+            <img src="../static/ecorepo_logo.png" alt="Description of the image" width="300" height="300">
+        </div>
+        <div><h3 style="color:white;">{{output|safe}}</h3></div>
     </div>
 
     <div class="box2">

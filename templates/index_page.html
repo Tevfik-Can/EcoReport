@@ -1,11 +1,56 @@
 {% extends 'base.html' %}
 
-{% block head %}
-
-{% endblock %}
-
 {% block body %}
-<h2>this is body</h2>
+<div class="formbold-main-wrapper">
+    <div class="formbold-form-wrapper">
+        <div class="image-container">
+            <img src="../static/ecorepo_logo.png" alt="Description of the image" width="300" height="300">
+        </div>
+        <div><h1 style="color:white;">Welcome to Eco Report!</h1></div>
 
+        <form action="crime_reported.html" id="eventForm" style="color:white;" method="POST">
+                            <div class="formbold-input-group">
+                                <label for="report_name" class="formbold-form-label">Report Name</label>
+                                <input
+                                    type="text"
+                                    name="report_name"
+                                    id="report_name"
+                                    placeholder="Enter your name"
+                                    class="formbold-form-input"
+                                    required
+                                />
+                        </div>
 
+                        <div class="formbold-input-group">
+                                <label for="location" class="formbold-form-label">Location</label>
+                                <input
+                                    type="text"
+                                    name="location"
+                                    id="location"
+                                    placeholder="Enter your name"
+                                    class="formbold-form-input"
+                                    required
+                                />
+                        </div>
+
+                        <div class="formbold-input-group">
+                                <label class="formbold-form-label">Which category is it about?</label>
+                                <select class="formbold-form-select" name="category" id="category" required>
+                                        <option value="Clean Up">Clean up needed</option>
+                                        <option value="Distribute Food">Distribute Food</option>
+                                        <option value="Help the homeless">Help the homeless</option>
+                                        <option value="Help the Elderly">Help the Elderly</option>
+                                </select>
+                        </div>
+
+                        <div class="button-container">
+                                <button class="button-64" role="button">
+                                        <span class="text">
+                                                <input class="reportsubmit" type="submit"value="Report Crime!">
+                                        </span>
+                                </button>
+                        </div>
+                        </form>
+    </div>
+</div>
 {% endblock %}

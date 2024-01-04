@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  body {
+    font-family: 'Inter', sans-serif;
+  }
 
 .box1{
     display: flex;
@@ -7,29 +11,98 @@
     float: left;
     width: 30%;
     height: 100vh;
-    background-color:;
+    background-color: #36393e;
 }
 
 .insbox1{
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .box2 {
-    display: inline-block;
     position: relative;
     float: left;
     width: 70%;
     height: 100vh;
 }
 
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
+.reportsubmit{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #36393e;
 }
 
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CSS For the Form */
+
+  .formbold-main-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .formbold-form-wrapper {
+    margin: 0 auto;
+    max-width: 570px;
+    width: 100%;
+    color:white;
+  }
+
+  .formbold-input-group {
+    margin-bottom: 18px;
+  }
+
+  .formbold-form-select {
+    width: 100%;
+    padding: 12px 22px;
+    border-radius: 5px;
+    border: 1px solid #dde3ec;
+    background: #ffffff;
+    font-size: 16px;
+    color: #536387;
+    outline: none;
+    resize: none;
+  }
+
+  .formbold-form-input {
+    width: 100%;
+    padding: 13px 22px;
+    border-radius: 5px;
+    border: 1px solid #dde3ec;
+    background: #ffffff;
+    font-weight: 500;
+    font-size: 16px;
+    color: #07074d;
+    outline: none;
+    resize: none;
+  }
+  .formbold-form-input::placeholder {
+    color: #536387;
+  }
+  .formbold-form-input:focus {
+    background-color: #e6ffe6;
+  }
+  .formbold-form-label {
+    color: white;
+    font-size: 14px;
+    line-height: 24px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
 /* CSS For the button*/
+.button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .button-64 {
   align-items: center;
   background-image: linear-gradient(144deg,#cc3300, #ffff00 50%,#33cc33);
