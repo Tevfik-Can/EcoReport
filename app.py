@@ -47,22 +47,22 @@ m = folium.Map(location=[45.34410185, -75.9370470146851], zoom_start=50)
 
 # -------- Heat Map Customizations
 # Example data (replace after)
-# report_loc = [
-#     [getLoc.latitude, getLoc.longitude],
-#     [34.0522, -118.2437],  # Los Angeles, CA
-#     [40.7128, -74.0060],  # New York, NY
-#     # Add more data points as needed
-# ]
+report_loc = [
+    [getLoc.latitude, getLoc.longitude],
+    [34.0522, -118.2437],  # Los Angeles, CA
+    [40.7128, -74.0060],  # New York, NY
+    # Add more data points as needed
+]
 
 
 # Custom gradient colours (replace after)
-# gradient_colors = {
-#     0.2: '#ffff00',
-#     0.4: '#ffcc99',
-#     0.6: '#ff9966',
-#     0.8: '#ff0000',
-#     1.0: '#990000'
-# }
+gradient_colors = {
+    0.2: '#ffff00',
+    0.4: '#ffcc99',
+    0.6: '#ff9966',
+    0.8: '#ff0000',
+    1.0: '#990000'
+}
 #
 # # Gathering the reports for Heatmap
 # report_loc = []
@@ -80,7 +80,7 @@ m = folium.Map(location=[45.34410185, -75.9370470146851], zoom_start=50)
 #         # icon taken from https://fontawesome.com/icons/categories/humanitarian
 #     ).add_to(marker_cluster)
 #
-# HeatMap(report_loc, min_opacity=0.3, blur=25, gradient=gradient_colors).add_to(m)
+HeatMap(report_loc, min_opacity=0.3, blur=25, gradient=gradient_colors).add_to(m)
 
 
 
