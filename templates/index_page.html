@@ -51,6 +51,56 @@
                 </button>
         </div>
         </form>
+<!--
+        <form action="crime_reported.html" id="evenForm" style="color:white;" method="POST">
+            <div class="formbold-input-group">
+                <label for="report_id" class="formbold-form-label">Report Name</label>
+                <input
+                    type="text"
+                    name="report_id"
+                    id="report_id"
+                    placeholder="Enter your name"
+                    class="formbold-form-input"
+                    required
+                />
+        </div>
+        <div class="button-container">
+                <button class="button-66" role="button">
+                        <span class="text" style="background-color: grey;">
+                                <input class="reportsubmit" type="submit" value="Create Event!">
+                        </span>
+                </button>
+                <button class="button-65" role="button">
+                        <span class="text" id="statusSpan">
+                                <input class="reportsubmit" type="submit" value="Join Event!" id="submitButton" disabled>
+                        </span>
+                </button>
+        </div>
+        </form>
+        -->
     </div>
 </div>
+
+<script>
+    var reportIDs = {{ids|safe}}
+    $(document).ready(function() {
+            $('#report_id').on('input', function() {
+                var report_id = $(this).val();
+                var statusSpan = $('#statusSpan');
+
+                // Check if the entered report ID is in the array
+                if (reportIds.indexOf(parseInt(report_id)) !== -1) {
+                    // Enable the button
+                    $('#submitButton').prop('disabled', false);
+                    // Change the background color of the span to gray
+                    statusSpan.css('background-color', 'blue');
+                } else {
+                    // Disable the button
+                    $('#submitButton').prop('disabled', true);
+                    // Reset the background color and text of the span
+                    statusSpan.css('background-color', 'grey');
+                }
+            });
+        });
+</script>
 {% endblock %}

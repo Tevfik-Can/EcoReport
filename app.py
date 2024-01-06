@@ -125,8 +125,14 @@ def index():
     body_html = m.get_root().html.render()
 
     script = m.get_root().script.render()
+
+    reports = getreports()
+    ids = []
+    for e in reports:
+        ids.append(e[0])
     return render_template('index_page.html', header=header, body_html=body_html,
-                           script=script)
+                           script=script, ids=ids)
+
 
 @app.route('/crime_reported.html', methods=['GET', 'POST'])
 def inserttodb():
@@ -161,8 +167,7 @@ def inserttodb():
                 "Good",
                 "Low",
                 "Quiet",
-                "Moderate",
-                None
+                "Moderate"
             )
             insertreports(data)
             output = "Your report has been added to our database successfully!"
