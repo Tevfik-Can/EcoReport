@@ -1,3 +1,6 @@
+# ADD CREATE EVENT + JOIN EVENT WHERE USER PUTS IN THE REPORT ID THEY WANT TO REGISTER OR CREATE
+# DYNAMICALLY CLOSE BUTTONS IF THERE IS ALREADY AN EVENT MADE FOR THAT
+
 # importing geopy library and Nominatim class
 from geopy.geocoders import Nominatim
 
@@ -18,6 +21,7 @@ from flask import Flask, render_template, request
 
 # from flask_sqlalchemy import SQLAlchemy
 
+app = Flask(__name__)
 
 def insertreports(data):
     # Example data to insert to SQL
@@ -28,7 +32,7 @@ def getreports():
     return db.getreport()
 
 
-def makemap(result):
+def makemap(result, start_lat, start_long):
     gradient_colors = {
         0.2: '#ffff00',
         0.4: '#ffcc99',
@@ -36,8 +40,10 @@ def makemap(result):
         0.8: '#ff0000',
         1.0: '#990000'
     }
-
-    m = folium.Map(location=[45.425063550000004, -75.69991745871616], zoom_start=50)
+    if start_long == 0 and start_lat == 0:
+        m = folium.Map(location=[45.425063550000004, -75.69991745871616], zoom_start=30)
+    else:
+        m = folium.Map(location=[start_lat, start_long], zoom_start=30)
 
     # # Example data (replace after)
     # report_loc = [
@@ -49,18 +55,34 @@ def makemap(result):
 
     report_loc = []
     # Setting up the marker clusters
-    marker_cluster = MarkerCluster().add_to(m)
+    # marker_cluster = MarkerCluster().add_to(m)
+
     for entry in result:
-        html = f"""
-                <h1> {entry[2]}</h1>
-                <p>You can use any html here! Let's do a list:</p>
-                <ul>
-                    <li>Item 1</li>
-                    <li>Item 2</li>
-                </ul>
-                </p>
-                <p>And that's a <a href="https://python-graph-gallery.com">link</a></p>
-                """
+        print(entry)
+        if entry[11] is None:
+            html = f"""
+                    <h1> {entry[2]}</h1>
+                    <p>Address: {entry[6]}</p>
+                    <div>               
+                    Create an Event!
+                    </div>
+                    """
+        else:
+            eventdetails = db.geteventbyid(id=entry[11])
+            html = f"""
+                    <h1> {entry[2]}</h1>
+                    <p>Address: {entry[6]}</p>
+                    <div>
+                    <p>Event Organized by: {eventdetails[2]}</p>
+                    <p>Date: {eventdetails[3]}</p>
+                    <p>People that joined so far: {eventdetails[4]}</p>
+                    </div>
+                    <div>
+                    <span class="text">
+                    Join the Event!
+                    </span>
+                    </div>
+                    """
         iframe = folium.IFrame(html=html, width=200, height=200)
         popup = folium.Popup(iframe, max_width=1650)
 
@@ -79,7 +101,14 @@ def makemap(result):
     return m
 
 
-app = Flask(__name__)
+def inserttoeventdb():
+    reportid = 1
+    event_data = {
+        'John Doe',
+        datetime.strptime('2022-01-15', '%Y-%m-%d'),
+        reportid
+    }
+    db.insertevent(data=event_data, reportid=reportid)
 
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123451231@localhost/db'
@@ -88,7 +117,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    m = makemap(result=getreports())
+    m = makemap(result=getreports(), start_lat=0, start_long=0)
     m.get_root().render()
 
     header = m.get_root().header.render()
@@ -99,10 +128,12 @@ def index():
     return render_template('index_page.html', header=header, body_html=body_html,
                            script=script)
 
-
 @app.route('/crime_reported.html', methods=['GET', 'POST'])
 def inserttodb():
+    start_lat = 0
+    start_long = 0
     if request.method == 'POST':
+
         # calling the Nominatim tool and create Nominatim class
         loc = Nominatim(user_agent="Geopy Library")
 
@@ -119,18 +150,6 @@ def inserttodb():
             print("Latitude = ", getLoc.latitude, "\n")
             print("Longitude = ", getLoc.longitude)
             # Example data to insert to SQL
-            # data = {
-            #     "report_name": request.form["report_name"],
-            #     "category": request.form["category"],
-            #     "coordinates": [getLoc.latitude, getLoc.longitude],  # Example latitude and longitude for New York City
-            #     "date": datetime.strptime('2022-01-15', '%Y-%m-%d'),
-            #     "addr": getLoc.address,
-            #     # Fetch these variables with API
-            #     "air_quality": "Good",
-            #     "pollen_cond": "Low",
-            #     "uv_index": "Quiet",
-            # }
-
             data = (
                 request.form["report_name"],
                 request.form["category"],
@@ -141,16 +160,17 @@ def inserttodb():
                 # Fetch these variables with API
                 "Good",
                 "Low",
-                "Quiet"
+                "Quiet",
                 "Moderate",
                 None
             )
             insertreports(data)
             output = "Your report has been added to our database successfully!"
-
+            start_lat = getLoc.latitude
+            start_long = getLoc.longitude
     else:
         output = "There was an error inserting the report into our database."
-    m = makemap(result=getreports())
+    m = makemap(result=getreports(), start_lat=start_lat, start_long=start_long)
     m.get_root().render()
 
     header = m.get_root().header.render()
